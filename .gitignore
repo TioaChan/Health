@@ -1,6 +1,10 @@
 .DS_Store
 
 ###########
+Health_backend/src/main/webapp/img/*
+Health_backend/src/main/webapp/js/*
+Health_backend/src/main/webapp/plugins/**
+###########
 .idea/**
 *.iml
 ############
