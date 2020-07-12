@@ -5,6 +5,7 @@ import dev.tioachan.constant.MessageConstant;
 import dev.tioachan.domain.CheckGroup;
 import dev.tioachan.entity.Result;
 import dev.tioachan.service.CheckGroupService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +25,19 @@ public class CheckGroupController {
 			checkGroupList=checkGroupService.getCheckItem();
 		}catch (Exception e){
 			e.printStackTrace();
-			return new Result(false, MessageConstant.ADD_CHECKGROUP_FAIL);
+			return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
 		}
 		return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS,checkGroupList);
+	}
+
+	@RequestMapping("/add")
+	public Result add(@RequestBody CheckGroup tempformData,Integer[] checkitemIds){
+		try {
+			checkGroupService.addCheckGroup(tempformData,checkitemIds);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new Result(false, MessageConstant.ADD_CHECKGROUP_FAIL);
+		}
+		return new Result(true, MessageConstant.ADD_CHECKGROUP_SUCCESS);
 	}
 }

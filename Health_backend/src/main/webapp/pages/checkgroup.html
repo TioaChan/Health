@@ -292,6 +292,9 @@
                 //添加
                 handleAdd () {
                 	console.log(this.formData);
+                	console.log(this.checkitemIds);
+
+                	axios.post("/checkgroup/add.do?checkitemIds="+this.checkitemIds,this.formData).then().catch();
                 },
                 //分页查询
                 findPage() {

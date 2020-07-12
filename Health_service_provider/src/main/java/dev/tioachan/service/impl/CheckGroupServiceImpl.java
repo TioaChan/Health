@@ -20,4 +20,17 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 	public List<CheckGroup> getCheckItem() {
 		return checkGroupDao.getCheckItem();
 	}
+
+	@Override
+	public void addCheckGroup(CheckGroup groupData, Integer[] checkItemIds) {
+		checkGroupDao.addCheckGroup(groupData);
+		Integer id = groupData.getId();
+		checkGroupDao.addCheckGroupCheckItems(id,checkItemIds);
+	}
+
+
+//	@Override
+//	public void addCheckGroup(CheckGroup tempformData, Integer[] checkitemIds) {
+
+//	}
 }

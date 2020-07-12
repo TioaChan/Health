@@ -7,4 +7,5 @@ import java.util.List;
 public interface CheckGroupService {
 	List<CheckGroup> getCheckItem();
 
+	void addCheckGroup(CheckGroup groupData, Integer[] checkItemIds);
 }

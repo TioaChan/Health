@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="dev.tioachan.dao.CheckGroupDao">
+	<insert id="addCheckGroup" parameterType="dev.tioachan.domain.CheckGroup" useGeneratedKeys="true" keyProperty="id">
+		insert into t_checkgroup (code,name,helpCode,sex,remark,attention) values (
+			#{code},#{name},#{helpCode},#{sex},#{remark},#{attention}
+		)
+	</insert>
+	<insert id="addCheckGroupCheckItems">
+		insert into t_checkgroup_checkitem (checkgroup_id,checkitem_id) values
+		<foreach collection="items" item="item" separator=",">
+			(#{groupId},#{item})
+		</foreach>
+	</insert>
 
 	<select id="getCheckItem" resultType="dev.tioachan.domain.CheckGroup">
 		select * from t_checkitem
