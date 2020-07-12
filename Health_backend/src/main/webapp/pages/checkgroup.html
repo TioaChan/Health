@@ -267,7 +267,7 @@
                 pagination: {//分页相关属性
                     currentPage: 1,
                     pageSize:10,
-                    total:100,
+                    total:0,
                     queryString:null,
                 },
                 dataList: [],//列表数据
@@ -298,6 +298,16 @@
                 },
                 //分页查询
                 findPage() {
+					var param = {
+						currentPage:this.pagination.currentPage,
+						pageSize:this.pagination.pageSize,
+						queryString: this.pagination.queryString
+					};
+					axios.post("/checkgroup/findPage.do",param).then((res)=>{
+						//解析Controller响应回的数据，为模型数据赋值
+						this.pagination.total = res.data.total;
+						this.dataList = res.data.rows;
+					});
                 },
                 // 重置表单
                 resetForm() {
