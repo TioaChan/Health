@@ -165,7 +165,7 @@
                                 </el-tabs>
                             </template>
                             <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible = false">取消</el-button>
+                                <el-button @click="closeForm()">取消</el-button>
                                 <el-button type="primary" @click="handleAdd()">确定</el-button>
                             </div>
                         </el-dialog>
@@ -291,6 +291,7 @@
                 },
                 //添加
                 handleAdd () {
+                	console.log(this.formData);
                 },
                 //分页查询
                 findPage() {
@@ -300,11 +301,20 @@
 					this.formData = {}
                 },
 				closeForm(){
-					this.$refs['dataAddForm'].resetFields();
+					this.$refs['checkGroupAddForm'].resetFields();
 					this.dialogFormVisible=false;
 				},
                 // 弹出添加窗口
                 handleCreate() {
+                	axios.get("/checkgroup/getCheckItem.do").then(resp=>{
+                		console.log(resp)
+                		if (resp.data.flag){
+							this.tableData=resp.data.data;
+                        }
+                    }).catch(error=>{
+						this.closeForm();
+						this.$message.error("出现错误，请稍后重试。")
+                    })
                 	this.dialogFormVisible=true;
                 },
                 // 弹出编辑窗口
