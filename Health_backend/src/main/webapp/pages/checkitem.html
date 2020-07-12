@@ -121,7 +121,7 @@
                                 </el-row>
                             </el-form>
                             <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible = false">取消</el-button>
+                                <el-button @click="closeForm()">取消</el-button>
                                 <el-button type="primary" @click="handleAdd()">确定</el-button>
                             </div>
                         </el-dialog>
@@ -265,15 +265,20 @@
 						pageSize:this.pagination.pageSize,
 						queryString: this.pagination.queryString
 					};
-					axios.post("/checkitem/findPage.do",param).then((res)=>{
-						//解析Controller响应回的数据，为模型数据赋值
-						this.pagination.total = res.data.total;
-						this.dataList = res.data.rows;
-					});
+					// axios.post("/checkitem/findPage.do",param).then((res)=>{
+					// 	//解析Controller响应回的数据，为模型数据赋值
+					// 	this.pagination.total = res.data.total;
+					// 	this.dataList = res.data.rows;
+					// });
                 },
                 // 重置表单
                 resetForm() {
+
 					this.formData = {}
+                },
+                closeForm(){
+					this.$refs['dataAddForm'].resetFields();
+					this.dialogFormVisible=false;
                 },
                 // 弹出添加窗口
                 handleCreate() {
