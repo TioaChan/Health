@@ -335,6 +335,17 @@
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
+                	// console.log(currentPage);
+					let param = {
+						currentPage:currentPage,
+						pageSize:this.pagination.pageSize,
+						queryString: this.pagination.queryString
+					};
+					axios.post("/checkgroup/findPage.do",param).then((res)=>{
+						//解析Controller响应回的数据，为模型数据赋值
+						this.pagination.total = res.data.total;
+						this.dataList = res.data.rows;
+					});
                 },
                 // 删除
                 handleDelete(row) {
