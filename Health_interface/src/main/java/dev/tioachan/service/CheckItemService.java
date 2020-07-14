@@ -9,4 +9,6 @@ public interface CheckItemService {
 	void add(CheckItem checkItem);
 	PageResult pageQuery(QueryPageBean queryPageBean);
 	Page<CheckItem> selectByCondition(String queryString);
+
+	void edit(CheckItem checkItem);
 }

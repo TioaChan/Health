@@ -32,4 +32,14 @@ public class CheckItemController {
 		PageResult pageResult = checkItemService.pageQuery(queryPageBean);
 		return pageResult;
 	}
+
+	@RequestMapping("/edit")
+	public Result edit(@RequestBody CheckItem checkItem){
+		try {
+			checkItemService.edit(checkItem);
+		}catch (Exception e){
+			return new Result(false,MessageConstant.EDIT_CHECKITEM_FAIL);
+		}
+		return new Result(true,MessageConstant.EDIT_CHECKITEM_SUCCESS);
+	}
 }

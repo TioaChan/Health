@@ -37,4 +37,9 @@ public class CheckItemServiceImpl implements CheckItemService {
 	public Page<CheckItem> selectByCondition(String queryString) {
 		return null;
 	}
+
+	@Override
+	public void edit(CheckItem checkItem) {
+		checkItemDao.edit(checkItem);
+	}
 }

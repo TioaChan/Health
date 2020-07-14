@@ -9,4 +9,6 @@ public interface CheckItemDao {
 	void add(CheckItem checkItem);
 
 	Page<CheckItem> selectByCondition(String queryString);
+
+	void edit(CheckItem checkItem);
 }

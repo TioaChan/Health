@@ -8,6 +8,13 @@
                       values
         (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
     </insert>
+
+	<update id="edit" parameterType="dev.tioachan.domain.CheckItem">
+		update t_checkitem set  code=#{code},name=#{name},sex=#{sex},age=#{age},
+		price=#{price},type=#{type},remark=#{remark},attention=#{attention}
+		where id=#{id}
+	</update>
+
 	<select id="selectByCondition" parameterType="string"
 			resultType="dev.tioachan.domain.CheckItem">
 		select * from t_checkitem
