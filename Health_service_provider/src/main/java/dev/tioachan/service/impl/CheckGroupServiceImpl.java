@@ -39,7 +39,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 		PageHelper.startPage(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
 		//执行SQL时，MYBATIS基于拦截器，看一下上文里有没有参数，如果有参数，拼合到sql形成分页
 		//select count(*)   / select * from   limit
-		Page<CheckItem> page = checkGroupDao.selectByCondition(queryPageBean.getQueryString());
+		Page<CheckGroup> page = checkGroupDao.selectByCondition(queryPageBean.getQueryString());
 		return new PageResult(page.getTotal(),page.getResult());
 	}
 
