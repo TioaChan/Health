@@ -326,14 +326,14 @@
 				},
                 // 弹出添加窗口
                 handleCreate() {
-                	axios.get("/checkgroup/getCheckItem.do").then(resp=>{
+                	axios.get("/checkitem/getAll.do").then(resp=>{
                 		console.log(resp)
                 		if (resp.data.flag){
 							this.tableData=resp.data.data;
                         }
                     }).catch(error=>{
 						this.closeForm();
-						this.$message.error("出现错误，请稍后重试。")
+						this.$message.error("获取检查项出现错误，请稍后重试。")
                     })
                 	this.dialogFormVisible=true;
                 },

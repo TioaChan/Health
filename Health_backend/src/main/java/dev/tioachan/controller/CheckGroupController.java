@@ -20,18 +20,6 @@ public class CheckGroupController {
 	@Reference
 	private CheckGroupService checkGroupService;
 
-	@RequestMapping("/getCheckItem")
-	public Result getCheckItem(){
-		List<CheckGroup> checkGroupList=null;
-		try {
-			checkGroupList=checkGroupService.getCheckItem();
-		}catch (Exception e){
-			e.printStackTrace();
-			return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
-		}
-		return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS,checkGroupList);
-	}
-
 	@RequestMapping("/add")
 	public Result add(@RequestBody CheckGroup tempformData,Integer[] checkitemIds){
 		try {

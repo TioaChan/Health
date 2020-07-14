@@ -26,9 +26,6 @@
 		</foreach>
 	</delete>
 
-	<select id="getCheckItem" resultType="dev.tioachan.domain.CheckGroup">
-		select * from t_checkgroup
-	</select>
 	<select id="selectByCondition" resultType="dev.tioachan.domain.CheckGroup">
 		select * from t_checkgroup
 		<if test="value != null and value.length > 0">
