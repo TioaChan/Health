@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import dev.tioachan.dao.CheckGroupDao;
+import dev.tioachan.dao.CheckItemDao;
 import dev.tioachan.domain.CheckGroup;
 import dev.tioachan.domain.CheckItem;
 import dev.tioachan.entity.PageResult;
@@ -13,6 +14,9 @@ import dev.tioachan.service.CheckItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service(interfaceClass = CheckGroupService.class)
@@ -20,6 +24,8 @@ import java.util.List;
 public class CheckGroupServiceImpl implements CheckGroupService {
 	@Autowired
 	private CheckGroupDao checkGroupDao;
+	@Autowired
+	private CheckItemDao checkItemDao;
 
 	@Override
 	public List<CheckGroup> getCheckItem() {
@@ -43,9 +49,32 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 		return new PageResult(page.getTotal(),page.getResult());
 	}
 
+	@Override
+	public void edit(CheckGroup tempformData, Integer[] checkitemIds) {
+		//	originalItemids 为数据库中原有的组的项目的数组 假设原始数据为 [1,2,3,4]
+		List<Integer> originalItemids = checkItemDao.getIdsByCheckGroupId(tempformData.getId());
+		//	currentItemIds  为用户处理后的数据，tempList是其备份，假设处理后的数据为[3,4,5,6,7]
+		List<Integer> currentItemIds=new ArrayList<>(Arrays.asList(checkitemIds));
+		List<Integer> tempList = new ArrayList<>(Arrays.asList(checkitemIds));
 
-//	@Override
-//	public void addCheckGroup(CheckGroup tempformData, Integer[] checkitemIds) {
+		//处理数据.removeAll(原始数据)
+		//[3,4,5,6,7].removeAll([1,2,3,4]) => [5,6,7] 表示为用户勾选的项目，需要在数据库中增加
+		currentItemIds.removeAll(originalItemids);
 
-//	}
+		//原始数据.removeAll（处理数据）
+		//此处，处理数据已被操作，使用处理数据的备份
+		//[1,2,3,4].removeAll([3,4,5,6,7]) => [1,2] 表示为用户取消的项目，需要在数据库中删除
+		originalItemids.removeAll(tempList);
+
+		//所有改动同步到数据库
+		checkGroupDao.edit(tempformData);
+
+		if (currentItemIds.size()>0){
+			checkGroupDao.removeCheckGroupCheckItems(tempformData.getId(),currentItemIds.toArray(new Integer[currentItemIds.size()]));
+		}
+		if (originalItemids.size()>0){
+			checkGroupDao.addCheckGroupCheckItems(tempformData.getId(),originalItemids.toArray(new Integer[originalItemids.size()]));
+		}
+	}
+
 }

@@ -2,6 +2,7 @@ package dev.tioachan.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import dev.tioachan.constant.MessageConstant;
+import dev.tioachan.domain.CheckGroup;
 import dev.tioachan.domain.CheckItem;
 import dev.tioachan.entity.PageResult;
 import dev.tioachan.entity.QueryPageBean;
@@ -10,6 +11,8 @@ import dev.tioachan.service.CheckItemService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/checkitem")
@@ -42,4 +45,27 @@ public class CheckItemController {
 		}
 		return new Result(true,MessageConstant.EDIT_CHECKITEM_SUCCESS);
 	}
+
+	@RequestMapping("/getAll")
+	public Result getAll(){
+		try {
+			List<CheckItem> checkItemList=checkItemService.getAll();
+			return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS,checkItemList);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
+		}
+	}
+
+	@RequestMapping("/getIdsByCheckGroup")
+	public Result getIdsByCheckGroup(Integer id){
+		try {
+			List<Integer> checkItemList=checkItemService.getIdsByCheckGroupId(id);
+			return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS,checkItemList);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
+		}
+	}
+
 }

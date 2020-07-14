@@ -42,6 +42,18 @@ public class CheckGroupController {
 		}
 		return new Result(true, MessageConstant.ADD_CHECKGROUP_SUCCESS);
 	}
+
+	@RequestMapping("/edit")
+	public Result edit(@RequestBody CheckGroup tempformData,Integer[] checkitemIds){
+		try {
+			checkGroupService.edit(tempformData,checkitemIds);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new Result(false, MessageConstant.EDIT_CHECKGROUP_FAIL);
+		}
+		return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
+	}
+
 	@RequestMapping("/findPage")
 	public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
 		PageResult pageResult = checkGroupService.pageQuery(queryPageBean);

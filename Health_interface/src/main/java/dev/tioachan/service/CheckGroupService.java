@@ -12,4 +12,6 @@ public interface CheckGroupService {
 	void addCheckGroup(CheckGroup groupData, Integer[] checkItemIds);
 
 	PageResult pageQuery(QueryPageBean queryPageBean);
+
+	void edit(CheckGroup tempformData, Integer[] checkitemIds);
 }

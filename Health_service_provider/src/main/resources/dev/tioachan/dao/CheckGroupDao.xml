@@ -14,6 +14,18 @@
 		</foreach>
 	</insert>
 
+	<update id="edit" parameterType="dev.tioachan.domain.CheckGroup">
+		update t_checkgroup set code=#{code},name=#{name},helpCode=#{helpCode},sex=#{sex},
+		remark=#{remark},attention=#{attention}
+		where id=#{id}
+	</update>
+	<delete id="removeCheckGroupCheckItems">
+		delete from t_checkgroup_checkitem where checkgroup_id = #{groupId} and checkitem_id in
+		<foreach collection="items" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</delete>
+
 	<select id="getCheckItem" resultType="dev.tioachan.domain.CheckGroup">
 		select * from t_checkgroup
 	</select>

@@ -16,5 +16,10 @@ public interface CheckGroupDao {
 
 	void addCheckGroupCheckItems(@Param("groupId") Integer groupId,@Param("items") Integer[] items);
 
+	void removeCheckGroupCheckItems(@Param("groupId")Integer id, @Param("items") Integer[] toArray);
+
 	Page<CheckGroup> selectByCondition(String queryString);
+
+	void edit(CheckGroup tempformData);
+
 }

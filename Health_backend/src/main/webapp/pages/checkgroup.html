@@ -177,7 +177,7 @@
                             <template>
                                 <el-tabs v-model="activeName" type="card">
                                     <el-tab-pane label="基本信息" name="first">
-                                        <el-form label-position="right" label-width="100px">
+                                        <el-form ref="checkGroupEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
                                             <el-row>
                                                 <el-col :span="12">
                                                     <el-form-item label="编码">
@@ -288,12 +288,12 @@
             methods: {
                 //编辑
                 handleEdit() {
-                },
+					axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData).then().catch();
+				},
                 //添加
                 handleAdd () {
-                	console.log(this.formData);
-                	console.log(this.checkitemIds);
-
+                	// console.log(this.formData);
+                	// console.log(this.checkitemIds);
                 	axios.post("/checkgroup/add.do?checkitemIds="+this.checkitemIds,this.formData).then().catch();
                 },
                 //分页查询
@@ -311,11 +311,18 @@
                 },
                 // 重置表单
                 resetForm() {
-					this.formData = {}
+					this.formData = {};
+					this.checkitemIds=[];
                 },
 				closeForm(){
+					this.resetForm();
 					this.$refs['checkGroupAddForm'].resetFields();
 					this.dialogFormVisible=false;
+				},
+				closeEditForm(){
+					this.resetForm();
+					this.$refs['checkGroupEditForm'].resetFields();
+					this.dialogFormVisible4Edit=false;
 				},
                 // 弹出添加窗口
                 handleCreate() {
@@ -332,7 +339,34 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
-                	console.log(row);
+                	// console.log(row);
+                	this.formData=JSON.parse(JSON.stringify(row));
+					axios.get("/checkitem/getAll.do").then(resp=>{
+						// console.log(resp)
+						if (resp.data.flag){
+							this.tableData=resp.data.data;
+							axios.get("/checkitem/getIdsByCheckGroup.do?id="+row.id).then(resp=>{
+								// console.log("=============");
+								// console.log(resp);
+								if (resp.data.flag){
+									this.checkitemIds=resp.data.data;
+                                }
+								this.dialogFormVisible4Edit=true;
+                            }).catch(error=>{
+								this.closeEditForm();
+								this.$message.error("获取关联检查项时出现错误，请稍后重试。")
+								return false;
+							});
+						}else {
+							this.closeEditForm();
+							this.$message.error("获取检查项出现错误，请稍后重试。")
+							return false;
+                        }
+					}).catch(error=>{
+						this.closeEditForm();
+						this.$message.error("出现错误，请稍后重试。")
+						return false;
+					});
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {

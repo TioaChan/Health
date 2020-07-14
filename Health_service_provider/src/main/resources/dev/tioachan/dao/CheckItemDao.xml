@@ -15,11 +15,18 @@
 		where id=#{id}
 	</update>
 
-	<select id="selectByCondition" parameterType="string"
-			resultType="dev.tioachan.domain.CheckItem">
+	<select id="selectByCondition" resultType="dev.tioachan.domain.CheckItem" parameterType="string">
 		select * from t_checkitem
 		<if test="value != null and value.length > 0">
 			where code = #{value} or name = #{value}
 		</if>
 	</select>
+
+	<select id="getAll" resultType="dev.tioachan.domain.CheckItem">
+		select * from t_checkitem
+	</select>
+	<select id="getIdsByCheckGroupId" resultType="java.lang.Integer">
+		select checkitem_id from t_checkgroup_checkitem where checkgroup_id =#{groupId}
+	</select>
+
 </mapper>
