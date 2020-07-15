@@ -65,10 +65,10 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 		checkGroupDao.edit(tempformData);
 
 		if (currentItemIds.size()>0){
-			checkGroupDao.removeCheckGroupCheckItems(tempformData.getId(),currentItemIds.toArray(new Integer[currentItemIds.size()]));
+			checkGroupDao.addCheckGroupCheckItems(tempformData.getId(),currentItemIds.toArray(new Integer[currentItemIds.size()]));
 		}
 		if (originalItemids.size()>0){
-			checkGroupDao.addCheckGroupCheckItems(tempformData.getId(),originalItemids.toArray(new Integer[originalItemids.size()]));
+			checkGroupDao.removeCheckGroupCheckItems(tempformData.getId(),originalItemids.toArray(new Integer[originalItemids.size()]));
 		}
 	}
 

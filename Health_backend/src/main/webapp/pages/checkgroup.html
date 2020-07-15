@@ -180,12 +180,12 @@
                                         <el-form ref="checkGroupEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
                                             <el-row>
                                                 <el-col :span="12">
-                                                    <el-form-item label="编码">
+                                                    <el-form-item label="编码" prop="code">
                                                         <el-input v-model="formData.code"/>
                                                     </el-form-item>
                                                 </el-col>
                                                 <el-col :span="12">
-                                                    <el-form-item label="名称">
+                                                    <el-form-item label="名称" prop="name">
                                                         <el-input v-model="formData.name"/>
                                                     </el-form-item>
                                                 </el-col>
@@ -201,7 +201,7 @@
                                                     </el-form-item>
                                                 </el-col>
                                                 <el-col :span="12">
-                                                    <el-form-item label="助记码">
+                                                    <el-form-item label="助记码" prop="helpCode">
                                                         <el-input v-model="formData.helpCode"/>
                                                     </el-form-item>
                                                 </el-col>
@@ -249,7 +249,7 @@
                                 </el-tabs>
                             </template>
                             <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
+                                <el-button @click="closeEditForm()">取消</el-button>
                                 <el-button type="primary" @click="handleEdit()">确定</el-button>
                             </div>
                         </el-dialog>
@@ -288,7 +288,26 @@
             methods: {
                 //编辑
                 handleEdit() {
-					axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData).then().catch();
+                	this.$refs["checkGroupEditForm"].validate(result=>{
+                		if (result){
+							axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData).then(resp=>{
+								// console.log(resp);
+								if (resp.data.flag){
+									this.$message.success(resp.data.message);
+								}else{
+									this.$message.error(resp.data.message);
+								}
+							}).catch(error=>{
+								this.$message.error("编辑检查组时出现错误，请稍后重试");
+							}).finally(()=>{
+								this.closeEditForm();
+								this.findPage();
+							});
+                        }else {
+							this.$message.error("valid form failed");
+							return false;
+                        }
+                    });
 				},
                 //添加
                 handleAdd () {
