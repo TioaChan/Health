@@ -25,6 +25,9 @@
 			#{item}
 		</foreach>
 	</delete>
+	<delete id="delGroup">
+		delete from t_checkgroup where id=#{value}
+	</delete>
 
 	<select id="selectByCondition" resultType="dev.tioachan.domain.CheckGroup">
 		select * from t_checkgroup

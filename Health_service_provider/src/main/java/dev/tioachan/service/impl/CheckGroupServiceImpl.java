@@ -5,10 +5,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import dev.tioachan.dao.CheckGroupDao;
 import dev.tioachan.dao.CheckItemDao;
+import dev.tioachan.dao.SetmealDao;
 import dev.tioachan.domain.CheckGroup;
 import dev.tioachan.domain.CheckItem;
 import dev.tioachan.entity.PageResult;
 import dev.tioachan.entity.QueryPageBean;
+import dev.tioachan.entity.Result;
 import dev.tioachan.service.CheckGroupService;
 import dev.tioachan.service.CheckItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 	private CheckGroupDao checkGroupDao;
 	@Autowired
 	private CheckItemDao checkItemDao;
+	@Autowired
+	private SetmealDao setmealDao;
 
 	@Override
 	public void addCheckGroup(CheckGroup groupData, Integer[] checkItemIds) {
@@ -69,6 +73,17 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 		}
 		if (originalItemids.size()>0){
 			checkGroupDao.removeCheckGroupCheckItems(tempformData.getId(),originalItemids.toArray(new Integer[originalItemids.size()]));
+		}
+	}
+
+	@Override
+	public void delGroup(Integer groupId) {
+		List<Integer> idsByCheckGroupId = checkItemDao.getIdsByCheckGroupId(groupId);
+		List<Integer> idsByCheckGroupId1 = setmealDao.getIdsByCheckGroupId(groupId);
+		if (idsByCheckGroupId.size()==0&&idsByCheckGroupId1.size()==0){
+			checkGroupDao.delGroup(groupId);
+		}else {
+			throw new RuntimeException("存在已关联至本检查组的检查项或检查套餐");
 		}
 	}
 

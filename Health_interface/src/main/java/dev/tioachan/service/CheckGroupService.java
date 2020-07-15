@@ -3,6 +3,7 @@ package dev.tioachan.service;
 import dev.tioachan.domain.CheckGroup;
 import dev.tioachan.entity.PageResult;
 import dev.tioachan.entity.QueryPageBean;
+import dev.tioachan.entity.Result;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface CheckGroupService {
 	PageResult pageQuery(QueryPageBean queryPageBean);
 
 	void edit(CheckGroup tempformData, Integer[] checkitemIds);
+
+	void delGroup(Integer groupId);
 }

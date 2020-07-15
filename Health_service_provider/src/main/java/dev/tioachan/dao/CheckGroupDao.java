@@ -21,4 +21,5 @@ public interface CheckGroupDao {
 
 	void edit(CheckGroup tempformData);
 
+	void delGroup(Integer groupId);
 }

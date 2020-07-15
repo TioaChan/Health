@@ -42,6 +42,17 @@ public class CheckGroupController {
 		return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
 	}
 
+	@RequestMapping("/delete")
+	public Result delete(Integer groupId){
+		try {
+			checkGroupService.delGroup(groupId);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new Result(false, e.getMessage());
+		}
+		return new Result(true, MessageConstant.DELETE_CHECKGROUP_SUCCESS);
+	}
+
 	@RequestMapping("/findPage")
 	public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
 		PageResult pageResult = checkGroupService.pageQuery(queryPageBean);
