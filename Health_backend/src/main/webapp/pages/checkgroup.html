@@ -327,6 +327,7 @@
 								this.$message.error("新增检查组时出现错误，请稍后重试");
 							}).finally(()=>{
 								this.closeForm();
+								this.pagination.currentPage=1;
 								this.findPage();
 							});
 						}else {
@@ -417,6 +418,7 @@
 					};
 					axios.post("/checkgroup/findPage.do",param).then((res)=>{
 						//解析Controller响应回的数据，为模型数据赋值
+                        this.pagination.currentPage=currentPage;
 						this.pagination.total = res.data.total;
 						this.dataList = res.data.rows;
 					}).catch(error=>{
@@ -438,14 +440,14 @@
 							}else {
 								this.$message.error(resp.data.message)
                             }
+							this.findPage();
 						}).catch(error=>{
 							this.$message.error("删除失败，请稍后重试。")
+							this.findPage();
 						});
 					}).catch(() => {
 						this.$message.info('已取消删除');
-					}).finally(()=>{
-						this.findPage();
-                    });
+					});
                 }
             }
         })

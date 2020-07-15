@@ -34,8 +34,10 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 	@Override
 	public void addCheckGroup(CheckGroup groupData, Integer[] checkItemIds) {
 		checkGroupDao.addCheckGroup(groupData);
-		Integer id = groupData.getId();
-		checkGroupDao.addCheckGroupCheckItems(id,checkItemIds);
+		if (checkItemIds.length>0){
+			Integer id = groupData.getId();
+			checkGroupDao.addCheckGroupCheckItems(id,checkItemIds);
+		}
 	}
 
 	@Override
