@@ -46,6 +46,16 @@ public class CheckItemController {
 		return new Result(true,MessageConstant.EDIT_CHECKITEM_SUCCESS);
 	}
 
+	@RequestMapping("/delete")
+	public Result delete(Integer itemId){
+		try {
+			checkItemService.delete(itemId);
+		}catch (Exception e){
+			return new Result(false,e.getMessage());
+		}
+		return new Result(true,MessageConstant.DELETE_CHECKITEM_SUCCESS);
+	}
+
 	@RequestMapping("/getAll")
 	public Result getAll(){
 		try {

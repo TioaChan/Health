@@ -19,4 +19,8 @@ public interface CheckItemDao {
 	List<CheckItem> getAll();
 
 	List<Integer> getIdsByCheckGroupId(@Param("groupId") Integer id);
+
+	List<Integer> getGroupIdByCheckItemId(@Param("itemId")Integer itemId);
+
+	void del(@Param("itemId") Integer itemId);
 }

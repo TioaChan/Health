@@ -328,10 +328,30 @@
 						//解析Controller响应回的数据，为模型数据赋值
 						this.pagination.total = res.data.total;
 						this.dataList = res.data.rows;
+						this.pagenation.currentPage=currentPage;
 					});
                 },
                 // 删除
                 handleDelete(row) {
+					this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+					}).then(() => {
+						axios.get("/checkitem/delete.do?itemId="+row.id).then((resp)=>{
+							if (resp.data.flag){
+								this.$message.success(resp.data.message)
+							}else {
+								this.$message.error(resp.data.message)
+							}
+							this.findPage();
+						}).catch(error=>{
+							this.$message.error("删除失败，请稍后重试。")
+							this.findPage();
+						});
+					}).catch(() => {
+						this.$message.info('已取消删除');
+					});
                 }
             }
         })

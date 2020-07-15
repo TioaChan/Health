@@ -54,4 +54,14 @@ public class CheckItemServiceImpl implements CheckItemService {
 	public List<Integer> getIdsByCheckGroupId(Integer id) {
 		return checkItemDao.getIdsByCheckGroupId(id);
 	}
+
+	@Override
+	public void delete(Integer itemId) {
+		List<Integer> integerList= checkItemDao.getGroupIdByCheckItemId(itemId);
+		if (integerList.size()==0){
+			checkItemDao.del(itemId);
+		}else {
+			throw new RuntimeException("存在已关联至本检查项的检查组");
+		}
+	}
 }

@@ -17,4 +17,6 @@ public interface CheckItemService {
 	List<CheckItem> getAll();
 
 	List<Integer> getIdsByCheckGroupId(Integer id);
+
+	void delete(Integer itemId);
 }
