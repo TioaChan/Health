@@ -14,4 +14,8 @@ public interface SetmealDao {
 	List<Integer> getIdsByCheckGroupId(@Param("groupId") Integer id);
 
 	Page<Setmeal> selectByCondition(String queryString);
+
+	void addCheckGroup(Setmeal tempformData);
+
+	void addSetmealCheckGroup(@Param("setmeal_id") Integer id, @Param("itemIds") Integer[] checkitemIds);
 }

@@ -29,4 +29,13 @@ public class SetmealServiceImpl implements SetmealService {
 		Page<Setmeal> page = setmealDao.selectByCondition(queryPageBean.getQueryString());
 		return new PageResult(page.getTotal(),page.getResult());
 	}
+
+	@Override
+	public void addCheckGroup(Setmeal tempformData, Integer[] checkitemIds) {
+		setmealDao.addCheckGroup(tempformData);
+		if (checkitemIds.length>0){
+			Integer id = tempformData.getId();
+			setmealDao.addSetmealCheckGroup(id,checkitemIds);
+		}
+	}
 }
