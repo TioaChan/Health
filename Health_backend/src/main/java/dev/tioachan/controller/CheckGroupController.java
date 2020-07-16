@@ -3,6 +3,7 @@ package dev.tioachan.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import dev.tioachan.constant.MessageConstant;
 import dev.tioachan.domain.CheckGroup;
+import dev.tioachan.domain.CheckItem;
 import dev.tioachan.entity.PageResult;
 import dev.tioachan.entity.QueryPageBean;
 import dev.tioachan.entity.Result;
@@ -51,6 +52,17 @@ public class CheckGroupController {
 			return new Result(false, e.getMessage());
 		}
 		return new Result(true, MessageConstant.DELETE_CHECKGROUP_SUCCESS);
+	}
+
+	@RequestMapping("/getAll")
+	public Result getAll(){
+		try {
+			List<CheckGroup> checkGroupList=checkGroupService.getAll();
+			return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroupList);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
+		}
 	}
 
 	@RequestMapping("/findPage")

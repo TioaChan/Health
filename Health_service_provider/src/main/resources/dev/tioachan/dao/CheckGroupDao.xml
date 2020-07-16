@@ -35,4 +35,7 @@
 			where code = #{value} or name = #{value} or helpCode=#{value}
 		</if>
 	</select>
+	<select id="getAll" resultType="dev.tioachan.domain.CheckGroup">
+		select * from t_checkgroup
+	</select>
 </mapper>

@@ -16,4 +16,6 @@ public interface CheckGroupService {
 	void edit(CheckGroup tempformData, Integer[] checkitemIds);
 
 	void delGroup(Integer groupId);
+
+	List<CheckGroup> getAll();
 }
