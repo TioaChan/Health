@@ -481,7 +481,7 @@ label input[type="radio"]:checked {
 }
 
 .el-dropdown {
-    color: #fff;
+    color: #fff !important;
 }
 
 .avatar-wrapper img {
@@ -496,9 +496,9 @@ label input[type="radio"]:checked {
 }
 
 .el-dropdown-menu__item--divided {
-    margin: 0;
-    border: 0 none;
-    border-bottom: 1px solid #ebeef5
+    margin: 0 !important;
+    border: 0 none !important;
+    border-bottom: 1px solid #ebeef5 !important
 }
 
 .help {
@@ -561,7 +561,7 @@ label input[type="radio"]:checked {
 .el-menu-item:hover,
 .el-menu-item.is-active {
     color: #fff;
-    background: #0abdfe;
+    background: #0abdfe !important;
 }
 
 .el-menu-item:hover a,

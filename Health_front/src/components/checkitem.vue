@@ -263,10 +263,11 @@
                 //     this.pagination.total = res.data.total;
                 //     this.dataList = res.data.rows;
                 // });
-                this.$http.post("https://127.0.0.1:82/checkitem/findPage.do", param).then((res) => {
+                this.$http.post("http://127.0.0.1:82/checkitem/findPage.do", param).then((res) => {
                     //解析Controller响应回的数据，为模型数据赋值
                     this.pagination.total = res.data.total;
                     this.dataList = res.data.rows;
+                    console.log(res);
                 });
             },
             // 重置表单

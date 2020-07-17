@@ -8,6 +8,7 @@ import dev.tioachan.entity.PageResult;
 import dev.tioachan.entity.QueryPageBean;
 import dev.tioachan.entity.Result;
 import dev.tioachan.service.CheckItemService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/checkitem")
+@CrossOrigin
 public class CheckItemController {
 	@Reference
 	private CheckItemService checkItemService;

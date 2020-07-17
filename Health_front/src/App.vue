@@ -102,7 +102,7 @@
                     }, {
                         "path": "/3-2",
                         "title": "预约设置",
-                        "linkUrl": "ordersetting.html",
+                        "linkUrl": "OrderSetting",
                         "children": []
                     }, {
                         "path": "/3-3",
