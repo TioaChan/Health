@@ -1,7 +1,6 @@
 <template>
     <div>
-        <h2>checkitem</h2>
-        <div class="checkitem-header">
+        <div class="content-header">
             <h1>预约管理<small>检查项管理</small></h1>
             <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
                 <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -9,7 +8,7 @@
                 <el-breadcrumb-item>检查项管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div class="checkitem-body">
+        <div class="app-container">
             <div class="box">
                 <div class="filter-container">
                     <el-input placeholder="项目编码/项目名称" v-model="pagination.queryString" style="width: 200px;" class="filter-item"></el-input>
@@ -39,7 +38,7 @@
                     </el-pagination>
                 </div>
                 <!-- 新增标签弹层 -->
-                <div id="checkitem-add-form">
+                <div id="checkitem-add-form" class="add-form">
                     <el-dialog title="新增检查项" :visible.sync="dialogFormVisible">
                         <el-form ref="dataAddForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
                             <el-row>
@@ -107,7 +106,7 @@
                     </el-dialog>
                 </div>
                 <!-- 编辑标签弹层 -->
-                <div id="checkitem-ediet-form">
+                <div id="checkitem-ediet-form" class="add-form">
                     <el-dialog title="编辑检查项" :visible.sync="dialogFormVisible4Edit">
                         <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
                             <el-row>

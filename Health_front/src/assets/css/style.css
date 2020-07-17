@@ -621,7 +621,7 @@ label input[type="radio"]:checked {
 
 .pagiantion {
     text-align: right;
-    padding: 15px;
+    padding: 15px !important;
 }
 
 .box {
@@ -647,7 +647,7 @@ label input[type="radio"]:checked {
 .filter-container .el-input__inner {
     padding: 0 15px;
     height: 34px;
-    line-height: 34px;
+    /* line-height: 34px; */
 }
 
 .el-aside {

@@ -48,7 +48,7 @@
                         </el-submenu>
                     </el-menu>
                 </el-aside>
-                <el-container>
+                <el-container class="el-main">
                     <router-view />
                 </el-container>
             </el-container>
