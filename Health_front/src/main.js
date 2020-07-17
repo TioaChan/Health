@@ -1,9 +1,11 @@
 import Vue from 'vue'
+import './plugins/fontawesome'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import './plugins/element.js'
 import axios from 'axios'
+import 'font-awesome/css/font-awesome.css'
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false
