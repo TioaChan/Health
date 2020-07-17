@@ -5,7 +5,8 @@ import Home from '../components/Home.vue'
 import CheckItem from '../components/checkitem.vue'
 import CheckGroup from '../components/checkgroup.vue'
 import Setmeal from '../components/setmeal.vue'
-import OrderSetting from '../components/ordersetting.vue';
+import OrderSetting from '../components/ordersetting.vue'
+import newCheckItem from '../views/checkitem/index.vue'
 
 
 Vue.use(VueRouter)
@@ -31,6 +32,10 @@ const routes = [
     path: '/OrderSetting',
     name: 'OrderSetting',
     component: OrderSetting
+}, {
+    path: '/newCheckItem',
+    name: 'newCheckItem',
+    component: newCheckItem
 }]
 
 const router = new VueRouter({

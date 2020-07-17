@@ -236,6 +236,6 @@
     }
 </script>
 
-<style>
-
+<style scoped>
+    @import "../assets/css/orderset.css";
 </style>
