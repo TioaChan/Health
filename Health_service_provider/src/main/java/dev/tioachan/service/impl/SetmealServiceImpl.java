@@ -13,6 +13,8 @@ import dev.tioachan.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service(interfaceClass = SetmealService.class)
 @Transactional
 public class SetmealServiceImpl implements SetmealService {
@@ -37,5 +39,10 @@ public class SetmealServiceImpl implements SetmealService {
 			Integer id = tempformData.getId();
 			setmealDao.addSetmealCheckGroup(id,checkitemIds);
 		}
+	}
+
+	@Override
+	public List<Setmeal> findAll() {
+		return setmealDao.findAll();
 	}
 }
