@@ -81,7 +81,6 @@
         methods: {
             closeForm() {
                 this.$refs['dataAddForm'].resetFields();
-                this.formData = {}
                 return this.$emit("close");
             },
             handleAdd() { //添加
