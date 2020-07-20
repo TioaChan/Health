@@ -21,4 +21,5 @@ public interface SetmealDao {
 
 	List<Setmeal> findAll();
 
+	Setmeal findById(@Param("id")int id);
 }

@@ -13,4 +13,5 @@ public interface SetmealService {
 
 	List<Setmeal> findAll();
 
+	Setmeal findById(int id);
 }

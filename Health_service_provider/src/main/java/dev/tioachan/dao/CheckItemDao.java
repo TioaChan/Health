@@ -23,4 +23,6 @@ public interface CheckItemDao {
 	List<Integer> getGroupIdByCheckItemId(@Param("itemId")Integer itemId);
 
 	void del(@Param("itemId") Integer itemId);
+
+	CheckItem findCheckItemById(@Param("id") Integer id);
 }

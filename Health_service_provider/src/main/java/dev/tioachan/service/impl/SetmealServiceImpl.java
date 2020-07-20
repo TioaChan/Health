@@ -45,4 +45,9 @@ public class SetmealServiceImpl implements SetmealService {
 	public List<Setmeal> findAll() {
 		return setmealDao.findAll();
 	}
+
+	@Override
+	public Setmeal findById(int id) {
+		return setmealDao.findById(id);
+	}
 }

@@ -35,4 +35,10 @@
 		select checkitem_id from t_checkgroup_checkitem where checkitem_id =#{itemId}
 	</select>
 
+	<select id="findCheckItemById" parameterType="int" resultType="dev.tioachan.domain.CheckItem">
+        select * from t_checkitem
+        where id
+  	    in (select checkitem_id from t_checkgroup_checkitem where checkgroup_id=#{id})
+    </select>
+
 </mapper>

@@ -28,4 +28,14 @@ public class SetmealController {
 			return new Result(false, MessageConstant.GET_SETMEAL_LIST_FAIL);
 		}
 	}
+	@RequestMapping("/findById")
+	public Result findById(int id){
+		try{
+			Setmeal setmeal = setmealService.findById(id);
+			return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new Result(false, MessageConstant.QUERY_SETMEAL_FAIL);
+		}
+	}
 }
