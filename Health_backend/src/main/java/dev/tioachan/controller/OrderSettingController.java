@@ -18,6 +18,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/ordersetting")
+@CrossOrigin("*")
 public class OrderSettingController {
 
 	@Reference
