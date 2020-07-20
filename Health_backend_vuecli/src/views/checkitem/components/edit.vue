@@ -72,7 +72,6 @@
         name: "editForm",
         data() {
             return {
-
                 rules: { //校验规则
                     code: [{ required: true, message: '项目编码为必填项', trigger: 'blur' }],
                     name: [{ required: true, message: '项目名称为必填项', trigger: 'blur' }]
@@ -87,7 +86,6 @@
         methods: {
             closeEditForm() {
                 this.$refs['dataEditForm'].resetFields();
-                this.formData = {}
                 return this.$emit("close");
             },
             handleEdit() { //编辑
@@ -95,7 +93,7 @@
                     if (result) {
                         this.$http.post("http://127.0.0.1:82/checkitem/edit.do", this.formData).then(resp => {
                             if (resp.data.flag) {
-                                this.findPage();
+                                // this.findPage();
                                 this.$message.success("success")
                             } else {
                                 this.$message.error("error")
@@ -108,7 +106,6 @@
                     } else {
                         return false;
                         this.$message.error("error")
-
                     }
                 })
             },
