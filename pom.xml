@@ -10,6 +10,7 @@
 		<module>Health_interface</module>
 		<module>Health_service_provider</module>
 		<module>Health_backend</module>
+		<module>Health_mobile</module>
 	</modules>
 	<packaging>pom</packaging>
 	<!-- 集中定义依赖版本号 -->
