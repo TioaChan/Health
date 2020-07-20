@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/checkitem")
-@CrossOrigin
+@CrossOrigin("*")
 public class CheckItemController {
 	@Reference
 	private CheckItemService checkItemService;

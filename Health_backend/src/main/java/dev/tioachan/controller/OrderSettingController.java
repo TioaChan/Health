@@ -7,6 +7,7 @@ import dev.tioachan.entity.Result;
 import dev.tioachan.service.OrderSettingService;
 import dev.tioachan.util.POIUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ordersetting")
+@CrossOrigin("*")
 public class OrderSettingController {
 
 	@Reference
