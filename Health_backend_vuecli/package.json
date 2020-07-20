@@ -1,5 +1,5 @@
 {
-  "name": "health_front",
+  "name": "health_backend_vuecli",
   "version": "0.1.0",
   "private": true,
   "scripts": {
