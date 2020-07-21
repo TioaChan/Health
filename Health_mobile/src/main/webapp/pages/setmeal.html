@@ -60,7 +60,9 @@
 					//查询失败，弹出提示信息
 					this.$message.error(res.data.message);
 				}
-			});
+			}).catch(error=>{
+				this.$message.error(error);
+            });
         }
     });
 </script>

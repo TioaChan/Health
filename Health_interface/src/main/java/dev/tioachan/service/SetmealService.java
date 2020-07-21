@@ -5,6 +5,7 @@ import dev.tioachan.entity.PageResult;
 import dev.tioachan.entity.QueryPageBean;
 
 import java.util.List;
+import java.util.Set;
 
 public interface SetmealService {
 	PageResult pageQuery(QueryPageBean queryPageBean);
@@ -13,5 +14,5 @@ public interface SetmealService {
 
 	List<Setmeal> findAll();
 
-	Setmeal findById(int id);
+	Setmeal findById(Integer id,boolean isNested);
 }

@@ -24,5 +24,6 @@ public interface CheckItemDao {
 
 	void del(@Param("itemId") Integer itemId);
 
-	CheckItem findCheckItemById(@Param("id") Integer id);
+    List<CheckItem> findByCheckGroupId(@Param("id") Integer id);
+
 }
