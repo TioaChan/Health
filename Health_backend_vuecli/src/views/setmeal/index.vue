@@ -1,11 +1,11 @@
 <template>
     <div id="app">
         <div class="content-header">
-            <h1>预约管理<small>检查组管理</small></h1>
+            <h1>预约管理<small>套餐管理</small></h1>
             <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
                 <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item>预约管理</el-breadcrumb-item>
-                <el-breadcrumb-item>检查组管理</el-breadcrumb-item>
+                <el-breadcrumb-item>套餐管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="app-container">
@@ -17,13 +17,14 @@
                 </div>
                 <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
                     <el-table-column type="index" align="center" label="序号"></el-table-column>
-                    <el-table-column prop="code" label="检查组编码" align="center"></el-table-column>
-                    <el-table-column prop="name" label="检查组名称" align="center"></el-table-column>
+                    <el-table-column prop="code" label="套餐编码" align="center"></el-table-column>
+                    <el-table-column prop="name" label="套餐名称" align="center"></el-table-column>
                     <el-table-column label="适用性别" align="center">
                         <template slot-scope="scope">
                             <span>{{ scope.row.sex == '0' ? '不限' : scope.row.sex == '1' ? '男' : '女'}}</span>
                         </template>
                     </el-table-column>
+                    <el-table-column prop="age" label="适用年龄" align="center"></el-table-column>
                     <el-table-column prop="helpCode" label="助记码" align="center"></el-table-column>
                     <el-table-column prop="remark" label="说明" align="center"></el-table-column>
                     <el-table-column label="操作" align="center">
@@ -39,15 +40,8 @@
                 </div>
                 <!-- 新增标签弹层 -->
                 <div class="add-form">
-                    <el-dialog title="新增检查组" :visible.sync="dialogFormVisible">
-                        <addForm @close="closeAddForm" v-bind:tableData="tableData"></addForm>
-                    </el-dialog>
-                </div>
-
-                <!-- 编辑标签弹层 -->
-                <div class="add-form">
-                    <el-dialog title="编辑检查组" :visible.sync="dialogFormVisible4Edit">
-                        <editForm @close="closeEditForm" v-bind:tableData="tableData" v-bind:formData="formData" v-bind:currentCheckitemIds="currentCheckitemIds"></editForm>
+                    <el-dialog title="新增套餐" :visible.sync="dialogFormVisible">
+                        <add-form @close="closeAddForm" v-bind:currentTableData="currentTableData"></add-form>
                     </el-dialog>
                 </div>
             </div>
@@ -65,18 +59,19 @@
         },
         data() {
             return {
+
                 pagination: { //分页相关属性
                     currentPage: 1,
                     pageSize: 10,
-                    total: 0,
+                    total: 100,
                     queryString: null,
                 },
                 dataList: [], //列表数据
+
+                currentTableData: [], //添加表单窗口中检查组列表数据
+                currentCheckgroupIds: [], //添加表单窗口中检查组复选框对应id
                 dialogFormVisible: false, //控制添加窗口显示/隐藏
-                dialogFormVisible4Edit: false, //控制编辑窗口显示/隐藏
-                currentCheckitemIds: [], //新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
-                tableData: [], //新增和编辑表单中对应的检查项列表数据
-                formData: {}
+
             }
         },
         created() {
@@ -90,80 +85,20 @@
                     pageSize: this.pagination.pageSize,
                     queryString: this.pagination.queryString
                 };
-                this.$http.post("http://127.0.0.1:82/checkgroup/findPage.do", param).then((res) => {
+                this.$http.post("http://127.0.0.1:82/setmeal/findPage.do", param).then((res) => {
                     //解析Controller响应回的数据，为模型数据赋值
                     this.pagination.total = res.data.total;
                     this.dataList = res.data.rows;
                 });
             },
-            // 重置表单
-            resetForm() {
-                this.formData = {};
-                this.currentCheckitemIds = [];
-            },
-            closeAddForm() {
-                this.resetForm();
-                // this.$refs['checkGroupAddForm'].resetFields();
-                this.dialogFormVisible = false;
-                this.findPage();
-            },
-            closeEditForm() {
-                this.resetForm();
-                // this.$refs['checkGroupEditForm'].resetFields();
-                this.dialogFormVisible4Edit = false;
-                this.findPage();
-            },
-            // 弹出添加窗口
-            handleCreate() {
-                this.$http.get("http://127.0.0.1:82/checkitem/getAll.do").then(resp => {
-                    // console.log(resp)
-                    if (resp.data.flag) {
-                        this.tableData = resp.data.data;
-                    }
-                }).catch(error => {
-                    this.closeForm();
-                    this.$message.error("获取检查项出现错误，请稍后重试。")
-                })
-                this.dialogFormVisible = true;
-            },
-            // 弹出编辑窗口
-            handleUpdate(row) {
-                this.formData = JSON.parse(JSON.stringify(row));
-                this.$http.get("http://127.0.0.1:82/checkitem/getAll.do").then(resp => {
-                    if (resp.data.flag) {
-                        this.tableData = resp.data.data;
-                        // console.log("1====================");
-                        this.$http.get("http://127.0.0.1:82/checkitem/getIdsByCheckGroup.do?id=" + row.id).then(resp => {
-                            // console.log("=============");
-                            if (resp.data.flag) {
-                                this.currentCheckitemIds = resp.data.data;
-                            }
-                            this.dialogFormVisible4Edit = true;
-                        }).catch(error => {
-                            this.closeEditForm();
-                            this.$message.error("获取关联检查项时出现错误，请稍后重试。")
-                            return false;
-                        });
-                    } else {
-                        this.closeEditForm();
-                        this.$message.error("获取检查项出现错误，请稍后重试。")
-                        return false;
-                    }
-                }).catch(error => {
-                    this.closeEditForm();
-                    this.$message.error("出现错误，请稍后重试。")
-                    return false;
-                });
-            },
             //切换页码
             handleCurrentChange(currentPage) {
-                // console.log(currentPage);
                 let param = {
                     currentPage: currentPage,
                     pageSize: this.pagination.pageSize,
                     queryString: this.pagination.queryString
                 };
-                this.$http.post("http://127.0.0.1:82/checkgroup/findPage.do", param).then((res) => {
+                this.$http.post("http://127.0.0.1:82/setmeal/findPage.do", param).then((res) => {
                     //解析Controller响应回的数据，为模型数据赋值
                     this.pagination.currentPage = currentPage;
                     this.pagination.total = res.data.total;
@@ -174,6 +109,25 @@
                     return false;
                 });
             },
+
+
+            // 弹出添加窗口
+            handleCreate() {
+                this.$http.get("http://127.0.0.1:82/checkgroup/getAll.do").then(resp => {
+                    // console.log(resp)
+                    this.currentTableData = resp.data.data;
+                    this.dialogFormVisible = true;
+                }).catch(error => {
+                    this.closeForm();
+                    this.$message.error("获取检查项出现错误，请稍后重试。")
+                })
+            },
+            closeAddForm() {
+                this.findPage()
+                this.currentCheckgroupIds = [] //重置选中的检查组
+                this.dialogFormVisible = false;
+            },
+
             // 删除
             handleDelete(row) {
                 this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -181,7 +135,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.get("http://127.0.0.1:82/checkgroup/delete.do?groupId=" + row.id).then((resp) => {
+                    this.$http.get("http://127.0.0.1:82/setmeal/delete.do?setmealId=" + row.id).then((resp) => {
                         if (resp.data.flag) {
                             this.$message.success(resp.data.message)
                         } else {
@@ -201,6 +155,33 @@
 </script>
 
 <style scope>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+
     .datatable {
         position: relative;
         box-sizing: border-box;

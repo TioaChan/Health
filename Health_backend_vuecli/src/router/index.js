@@ -6,6 +6,7 @@ import Setmeal from '../components/setmeal.vue'
 import OrderSetting from '../components/ordersetting.vue'
 import newCheckItem from '../views/checkitem/index.vue'
 import newCheckGroup from '../views/checkgroup/index.vue'
+import newSetmeal from '../views/setmeal/index.vue'
 
 
 
@@ -27,7 +28,7 @@ const routes = [
     }, {
         path: '/Setmeal',
         name: 'Setmeal',
-        component: Setmeal
+        component: newSetmeal
     }, {
         path: '/OrderSetting',
         name: 'OrderSetting',
