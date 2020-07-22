@@ -93,7 +93,8 @@
                     code: [{ required: true, message: '项目编码为必填项', trigger: 'blur' }],
                     name: [{ required: true, message: '项目名称为必填项', trigger: 'blur' }],
                     helpCode: [{ required: true, message: '项目名称为必填项', trigger: 'blur' }]
-                }
+                },
+                checkitemIds: this.currentCheckitemIds,
             }
         },
         props: {
@@ -103,7 +104,7 @@
             formData: {
                 type: Object
             },
-            checkitemIds: {
+            currentCheckitemIds: {
                 type: Array
             }
         },
@@ -130,7 +131,6 @@
                             this.$message.error("编辑检查组时出现错误，请稍后重试");
                         }).finally(() => {
                             this.closeEditForm();
-                            this.findPage();
                         });
                     } else {
                         this.$message.error("valid form failed");

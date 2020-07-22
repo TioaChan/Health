@@ -129,8 +129,6 @@
                             this.$message.error("新增检查组时出现错误，请稍后重试");
                         }).finally(() => {
                             this.closeForm();
-                            this.pagination.currentPage = 1;
-                            this.findPage();
                         });
                     } else {
                         this.$message.error("valid form failed");

@@ -35,13 +35,13 @@
             <el-container>
                 <el-aside width="200px">
                     <el-menu>
-                        <el-submenu v-for="menu in menuList" :key='menu' :index="menu.path">
+                        <el-submenu v-for="menu in menuList" :index="menu.path">
                             <template slot="title">
                                 <i class="fa" :class="menu.icon"></i>
                                 {{menu.title}}
                             </template>
                             <template v-for="child in menu.children">
-                                <el-menu-item :key='child' :index="child.path">
+                                <el-menu-item :index="child.path">
                                     <a :href="child.linkUrl">{{child.title}}</a>
                                 </el-menu-item>
                             </template>

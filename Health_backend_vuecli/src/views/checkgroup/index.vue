@@ -47,7 +47,7 @@
                 <!-- 编辑标签弹层 -->
                 <div class="add-form">
                     <el-dialog title="编辑检查组" :visible.sync="dialogFormVisible4Edit">
-                        <editForm @close="closeEditForm" v-bind:tableData="tableData" v-bind:formData="formData" v-bind:checkitemIds="checkitemIds"></editForm>
+                        <editForm @close="closeEditForm" v-bind:tableData="tableData" v-bind:formData="formData" v-bind:currentCheckitemIds="currentCheckitemIds"></editForm>
                     </el-dialog>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                 dataList: [], //列表数据
                 dialogFormVisible: false, //控制添加窗口显示/隐藏
                 dialogFormVisible4Edit: false, //控制编辑窗口显示/隐藏
-                checkitemIds: [], //新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
+                currentCheckitemIds: [], //新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
                 tableData: [], //新增和编辑表单中对应的检查项列表数据
                 formData: {}
             }
@@ -99,7 +99,7 @@
             // 重置表单
             resetForm() {
                 this.formData = {};
-                this.checkitemIds = [];
+                this.currentCheckitemIds = [];
             },
             closeAddForm() {
                 this.resetForm();
@@ -136,7 +136,7 @@
                         this.$http.get("http://127.0.0.1:82/checkitem/getIdsByCheckGroup.do?id=" + row.id).then(resp => {
                             // console.log("=============");
                             if (resp.data.flag) {
-                                this.checkitemIds = resp.data.data;
+                                this.currentCheckitemIds = resp.data.data;
                             }
                             this.dialogFormVisible4Edit = true;
                         }).catch(error => {
