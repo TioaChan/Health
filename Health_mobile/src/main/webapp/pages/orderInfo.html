@@ -121,16 +121,36 @@
 							return false;
 						}
 						axios.post("/validateCode/send4Order.do?telephone=" + telephone).then((response) => {
-							if(!response.data.flag){
+							if(response.data.flag){
                             //验证码发送失败
-								this.$message.error('验证码发送失败，请检查手机号输入是否正确');
-							}
+								this.$message.success(response.data.message)
+							}else{
+								this.$message.error(response.data.message);
+                            }
 						}).catch(error=>{
 							this.$message.error('验证码发送失败');
                         })
                     },
+                    con(e){
+                    	console.log(e)
+                    },
                     //提交预约
                     submitOrder(){
+						if(!checkIdCard(this.orderInfo.idCard)){
+							this.$message.error('身份证号码输入错误，请重新输入');
+							return ;
+						}
+
+						axios.post("/order/submit.do",this.orderInfo).then((response) => {
+							if(response.data.flag){
+								//预约成功，跳转到预约成功页面
+								window.location.href="orderSuccess.html?orderId=" +
+									response.data.data;
+							}else{
+								//预约失败，提示预约失败信息
+								this.$message.error(response.data.message);
+							}
+						});
                     }
                 },
                 created(){
