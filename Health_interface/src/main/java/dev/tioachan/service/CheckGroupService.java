@@ -18,4 +18,6 @@ public interface CheckGroupService {
 	void delGroup(Integer groupId);
 
 	List<CheckGroup> getAll();
+
+	List<Integer> getIdsBySetmealId(Integer id);
 }

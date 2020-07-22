@@ -72,4 +72,15 @@ public class CheckGroupController {
 		PageResult pageResult = checkGroupService.pageQuery(queryPageBean);
 		return pageResult;
 	}
+
+	@RequestMapping("/getIdsBySetmealId")
+	public Result getIdsBySetmealId(Integer id){
+		try {
+			List<Integer> list=checkGroupService.getIdsBySetmealId(id);
+			return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS,list);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
+		}
+	}
 }

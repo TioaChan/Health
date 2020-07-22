@@ -44,6 +44,12 @@
                         <add-form @close="closeAddForm" v-bind:currentTableData="currentTableData"></add-form>
                     </el-dialog>
                 </div>
+                <!-- 编辑标签弹层 -->
+                <div class="edit-form">
+                    <el-dialog title="编辑套餐" :visible.sync="dialogFormVisible4Edit">
+                        <edit-form @close="closeEditForm" v-bind:currentTableData="currentTableData" v-bind:currentCheckgroupIds="currentCheckgroupIds" v-bind:formData="currentFormData"></edit-form>
+                    </el-dialog>
+                </div>
             </div>
         </div>
     </div>
@@ -67,11 +73,11 @@
                     queryString: null,
                 },
                 dataList: [], //列表数据
-
+                currentFormData: {},
                 currentTableData: [], //添加表单窗口中检查组列表数据
                 currentCheckgroupIds: [], //添加表单窗口中检查组复选框对应id
                 dialogFormVisible: false, //控制添加窗口显示/隐藏
-
+                dialogFormVisible4Edit: false,
             }
         },
         created() {
@@ -127,6 +133,12 @@
                 this.currentCheckgroupIds = [] //重置选中的检查组
                 this.dialogFormVisible = false;
             },
+            closeEditForm() {
+                this.findPage()
+                this.currentCheckgroupIds = [] //重置选中的检查组
+                this.currentTableData = []
+                this.dialogFormVisible4Edit = false;
+            },
 
             // 删除
             handleDelete(row) {
@@ -149,7 +161,38 @@
                 }).catch(() => {
                     this.$message.info('已取消删除');
                 });
-            }
+            },
+
+            handleUpdate(row) {
+                this.currentFormData = JSON.parse(JSON.stringify(row));
+                console.log(JSON.stringify(this.currentFormData));
+                this.$http.get("http://127.0.0.1:82/checkgroup/getAll.do").then(resp => {
+                    if (resp.data.flag) {
+                        this.currentTableData = resp.data.data;
+                        // console.log("1====================");
+                        this.$http.get("http://127.0.0.1:82/checkgroup/getIdsBySetmealId.do?id=" + row.id).then(resp => {
+                            // console.log("=============");
+                            if (resp.data.flag) {
+                                this.currentCheckgroupIds = resp.data.data;
+                                // console.log(this.currentCheckgroupIds);
+                            }
+                            this.dialogFormVisible4Edit = true;
+                        }).catch(error => {
+                            this.closeEditForm();
+                            this.$message.error("获取关联检查项时出现错误，请稍后重试。")
+                            return false;
+                        });
+                    } else {
+                        this.closeEditForm();
+                        this.$message.error("获取检查项出现错误，请稍后重试。")
+                        return false;
+                    }
+                }).catch(error => {
+                    this.closeEditForm();
+                    this.$message.error("出现错误，请稍后重试。")
+                    return false;
+                });
+            },
         }
     }
 </script>

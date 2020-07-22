@@ -13,6 +13,7 @@ import dev.tioachan.entity.QueryPageBean;
 import dev.tioachan.entity.Result;
 import dev.tioachan.service.CheckGroupService;
 import dev.tioachan.service.CheckItemService;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -92,6 +93,12 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 	@Override
 	public List<CheckGroup> getAll() {
 		return checkGroupDao.getAll();
+	}
+
+	@Override
+	public List<Integer> getIdsBySetmealId(Integer id) {
+		List<Integer> list = setmealDao.getIdsByCheckGroupId(id);
+		return list;
 	}
 
 }
