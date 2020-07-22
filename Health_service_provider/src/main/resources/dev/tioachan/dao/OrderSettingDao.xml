@@ -14,11 +14,17 @@
           set number = #{number}
           where orderDate = #{orderDate}
 	</update>
+	<update id="editReservationsByOrderDate" parameterType="dev.tioachan.domain.OrderSetting">
+		update t_ordersetting set reservations = #{reservations} where orderDate = #{orderDate}
+	</update>
 
 	<select id="findCountByOrderDate" resultType="java.lang.Long" parameterType="java.util.Date">
 		 select count(id) from t_ordersetting where orderDate = #{orderDate}
 	</select>
 	<select id="getOrderSettingByMonth" resultType="dev.tioachan.domain.OrderSetting" parameterType="java.util.Date">
 		select * from t_ordersetting where orderDate between #{startDay} and #{endDay}
+	</select>
+	<select id="findByOrderDate" resultType="dev.tioachan.domain.OrderSetting" parameterType="java.util.Date">
+		select * from t_ordersetting where orderDate=#{orderDate}
 	</select>
 </mapper>

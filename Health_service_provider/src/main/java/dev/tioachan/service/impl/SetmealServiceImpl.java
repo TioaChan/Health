@@ -3,15 +3,18 @@ package dev.tioachan.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import dev.tioachan.dao.CheckGroupDao;
+import dev.tioachan.dao.CheckItemDao;
 import dev.tioachan.dao.SetmealDao;
-import dev.tioachan.domain.CheckItem;
+import dev.tioachan.domain.CheckGroup;
 import dev.tioachan.domain.Setmeal;
 import dev.tioachan.entity.PageResult;
 import dev.tioachan.entity.QueryPageBean;
-import dev.tioachan.service.CheckItemService;
 import dev.tioachan.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service(interfaceClass = SetmealService.class)
 @Transactional
@@ -19,6 +22,10 @@ public class SetmealServiceImpl implements SetmealService {
 
 	@Autowired
 	private SetmealDao setmealDao;
+	@Autowired
+	private CheckGroupDao checkGroupDao;
+	@Autowired
+	private CheckItemDao checkItemDao;
 
 	@Override
 	public PageResult pageQuery(QueryPageBean queryPageBean) {
@@ -38,4 +45,23 @@ public class SetmealServiceImpl implements SetmealService {
 			setmealDao.addSetmealCheckGroup(id,checkitemIds);
 		}
 	}
+
+	@Override
+	public List<Setmeal> findAll() {
+		return setmealDao.findAll();
+	}
+
+	@Override
+	public Setmeal findById(Integer id, boolean isNested) {
+		Setmeal setmeal = setmealDao.findById(id);
+		if (isNested){
+			List<CheckGroup> checkGroupBySetmealId = checkGroupDao.findBySetmealId(id);
+			for (CheckGroup checkGroup : checkGroupBySetmealId) {
+				checkGroup.setCheckItems(checkItemDao.findByCheckGroupId(checkGroup.getId()));
+			}
+			setmeal.setCheckGroups(checkGroupBySetmealId);
+		}
+		return setmeal;
+	}
+
 }

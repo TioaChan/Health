@@ -18,4 +18,8 @@ public interface SetmealDao {
 	void addCheckGroup(Setmeal tempformData);
 
 	void addSetmealCheckGroup(@Param("setmeal_id") Integer id, @Param("itemIds") Integer[] checkitemIds);
+
+	List<Setmeal> findAll();
+
+	Setmeal findById(@Param("id")Integer id);
 }

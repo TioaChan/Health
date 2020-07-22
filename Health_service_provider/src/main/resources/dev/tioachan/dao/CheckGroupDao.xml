@@ -38,4 +38,9 @@
 	<select id="getAll" resultType="dev.tioachan.domain.CheckGroup">
 		select * from t_checkgroup
 	</select>
+	<select id="findBySetmealId" parameterType="integer" resultType="dev.tioachan.domain.CheckGroup">
+		select * from t_checkgroup where id in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id = #{setmeal_id})
+	</select>
+
+
 </mapper>

@@ -25,4 +25,5 @@ public interface CheckGroupDao {
 
 	List<CheckGroup> getAll();
 
+	List<CheckGroup> findBySetmealId(@Param("setmeal_id")Integer id);
 }

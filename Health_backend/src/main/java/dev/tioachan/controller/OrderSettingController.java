@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/ordersetting")
@@ -53,7 +51,17 @@ public class OrderSettingController {
 			List<OrderSetting> list = orderSettingService.getOrderSettingByMonth(month);
 			//遍历OrderSetting
 //			List<Map> data = new ArrayList<>();
-			return new Result(true,MessageConstant.GET_ORDERSETTING_SUCCESS,list);
+			List<Map> result = new ArrayList<>();
+			if(list != null && list.size() > 0){
+				for (OrderSetting orderSetting : list) {
+					Map<String,Object> m = new HashMap<>();
+					m.put("date",orderSetting.getOrderDate().getDate());//获取日期数字（几号）
+					m.put("number",orderSetting.getNumber());
+					m.put("reservations",orderSetting.getReservations());
+					result.add(m);
+				}
+			}
+			return new Result(true,MessageConstant.GET_ORDERSETTING_SUCCESS,result);
 		}catch (Exception e){
 			e.printStackTrace();
 			return new Result(false,MessageConstant.GET_ORDERSETTING_FAIL);

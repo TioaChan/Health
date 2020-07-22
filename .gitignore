@@ -4,6 +4,12 @@
 Health_backend/src/main/webapp/img/*
 Health_backend/src/main/webapp/js/*
 Health_backend/src/main/webapp/plugins/**
+##########
+Health_mobile/src/main/webapp/img/*
+Health_mobile/src/main/webapp/js/*
+Health_mobile/src/main/webapp/css/*
+Health_mobile/src/main/webapp/fonts/*
+Health_mobile/src/main/webapp/plugins/**
 ###########
 .idea/**
 *.iml
