@@ -16,4 +16,8 @@ public interface OrderSettingDao {
 	void add(OrderSetting orderSetting);
 
 	List<OrderSetting> getOrderSettingByMonth(@Param("startDay") Date startDay,@Param("endDay") Date endDay);
+
+	OrderSetting findByOrderDate(@Param("orderDate")Date orderDate);
+
+	void editReservationsByOrderDate(OrderSetting orderSetting);
 }
