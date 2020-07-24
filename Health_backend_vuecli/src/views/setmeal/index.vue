@@ -41,13 +41,18 @@
                 <!-- 新增标签弹层 -->
                 <div class="add-form">
                     <el-dialog title="新增套餐" :visible.sync="dialogFormVisible">
+                        <!-- 新增套餐 只需传递 所有检查组currentTableData  的数据 -->
                         <add-form @close="closeAddForm" v-bind:currentTableData="currentTableData"></add-form>
                     </el-dialog>
                 </div>
                 <!-- 编辑标签弹层 -->
                 <div class="edit-form">
                     <el-dialog title="编辑套餐" :visible.sync="dialogFormVisible4Edit">
-                        <edit-form @close="closeEditForm" v-bind:currentTableData="currentTableData" v-bind:currentCheckgroupIds="currentCheckgroupIds" v-bind:formData="currentFormData"></edit-form>
+                        <!--  编辑套餐 需要传递 
+						待编辑套餐的信息currentFormData 
+						已勾选的检查组的id的数组currentCheckgroupIds 和 
+						所有检查组currentTableData -->
+                        <edit-form @close="closeEditForm" v-bind:currentTableData="currentTableData" v-bind:currentCheckgroupIds="currentCheckgroupIds" v-bind:currentFormData="currentFormData"></edit-form>
                     </el-dialog>
                 </div>
             </div>
@@ -72,11 +77,13 @@
                     total: 100,
                     queryString: null,
                 },
-                dataList: [], //列表数据
-                currentFormData: {},
-                currentTableData: [], //添加表单窗口中检查组列表数据
-                currentCheckgroupIds: [], //添加表单窗口中检查组复选框对应id
+                dataList: [], //列表分页数据
+
+                currentFormData: {}, //添加表单窗口中 套餐表单信息
+                currentTableData: [], //添加表单窗口中 所有检查组 列表数据
+                currentCheckgroupIds: [], //添加表单窗口中 已勾选的检查组 复选框对应id
                 dialogFormVisible: false, //控制添加窗口显示/隐藏
+
                 dialogFormVisible4Edit: false,
             }
         },
@@ -135,8 +142,9 @@
             },
             closeEditForm() {
                 this.findPage()
-                this.currentCheckgroupIds = [] //重置选中的检查组
-                this.currentTableData = []
+                this.currentCheckgroupIds = []; //重置选中的检查组
+                this.currentTableData = [];
+                this.currentFormData = {};
                 this.dialogFormVisible4Edit = false;
             },
 
@@ -164,21 +172,31 @@
             },
 
             handleUpdate(row) {
+
+                // ================================================
                 this.currentFormData = JSON.parse(JSON.stringify(row));
-                console.log(JSON.stringify(this.currentFormData));
+                // console.log(this.currentFormData);
+                // ================================================
+
                 this.$http.get("http://127.0.0.1:82/checkgroup/getAll.do").then(resp => {
                     if (resp.data.flag) {
+
+                        // ================================================
                         this.currentTableData = resp.data.data;
-                        // console.log("1====================");
+                        // console.log(this.currentTableData);
+                        // ================================================
+
                         this.$http.get("http://127.0.0.1:82/checkgroup/getIdsBySetmealId.do?id=" + row.id).then(resp => {
-                            // console.log("=============");
                             if (resp.data.flag) {
+                                // ================================================
                                 this.currentCheckgroupIds = resp.data.data;
                                 // console.log(this.currentCheckgroupIds);
+                                // ================================================
                             }
+                            // console.log("=============================================================================")
                             this.dialogFormVisible4Edit = true;
                         }).catch(error => {
-                            this.closeEditForm();
+                            this.closeEditForm()
                             this.$message.error("获取关联检查项时出现错误，请稍后重试。")
                             return false;
                         });

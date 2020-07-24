@@ -103,26 +103,28 @@
 
 <script>
     export default {
-        props: {
-            currentTableData: {
-                type: Array
-            }, //表单数据
+        // props: {
+        // currentTableData: {
+        //     type: Array
+        // }, //表单数据
 
-            currentCheckgroupIds: {
-                type: Array
-            },
-            // currentFormData: {
-            //     type: Object
-            // }
-            formData: {
-                type: Object
-            }
-        },
+        // currentCheckgroupIds: {
+        //     type: Array
+        // },
+        // currentFormData: {
+        //     type: Object
+        // },
+        // },
+        props: ["currentTableData", "currentCheckgroupIds", "currentFormData"],
         data() {
             return {
-                // formData: this.currentFormData,
-                tableData: this.currentTableData, //添加表单窗口中检查组列表数据
-                checkgroupIds: this.currentCheckgroupIds,
+                // formData: this.currentFormData, //来自父组件的数据 赋给 子组件
+                // tableData: this.currentTableData,
+                // checkgroupIds: this.currentCheckgroupIds,
+                formData: {}, //来自父组件的数据 赋给 子组件
+                tableData: [],
+                checkgroupIds: [],
+
                 autoUpload: true, //自动上传
                 imageUrl: this.currentTableData.imageUrl, //模型数据，用于上传图片完成后图片预览
                 activeName: 'first', //添加/编辑窗口Tab标签名称
@@ -131,6 +133,34 @@
                     name: [{ required: true, message: '项目名称为必填项', trigger: 'blur' }],
                     helpCode: [{ required: true, message: '项目名称为必填项', trigger: 'blur' }]
                 },
+            }
+        },
+        mounted() {
+            this.formData = this.currentFormData; //来自父组件的数据 赋给 子组件
+            this.tableData = this.currentTableData;
+            this.checkgroupIds = this.currentCheckgroupIds;
+        },
+
+        // 来自父组件的数据无法同步到子组件（第二次触发子组件以后）
+        // Vue父子组件通过prop异步传输数据踩坑：https://juejin.im/post/5b3cd8355188251b105ad14b
+        watch: {
+            currentTableData: {
+                deep: true,
+                handler(nv, ov) {
+                    this.tableData = this.currentTableData;
+                }
+            },
+            currentFormData: {
+                deep: true,
+                handler(nv, ov) {
+                    this.formData = this.currentFormData;
+                }
+            },
+            checkgroupIds: {
+                deep: true,
+                handler(nv, ov) {
+                    this.checkgroupIds = this.currentCheckgroupIds;
+                }
             }
         },
         methods: {
@@ -158,7 +188,7 @@
 
             //添加
             handleEdit() {
-                this.$http.post("http://127.0.0.1:82/setmeal/add.do?checkgroupIds=" + this.checkgroupIds, this.formData).then((res) => {
+                this.$http.post("http://127.0.0.1:82/setmeal/edit.do?checkgroupIds=" + this.checkgroupIds, this.formData).then((res) => {
                     if (res.data.flag) {
                         //执行成功
                         this.$message({
@@ -171,15 +201,18 @@
                         this.$message.error(res.data.message);
                     }
                 }).finally(() => {
-                    this.closeAddForm();
+                    this.closeEditForm();
                 });
             },
 
             closeEditForm()
             {
                 // this.formData = {};
+                // this.checkgroupIds = [];
+                // this.tableData = [];
+                // this.formData = {};
+
                 this.activeName = "first";
-                this.checkgroupIds = [];
                 this.imageUrl = null;
                 this.$refs['setmealEditForm'].resetFields();
                 return this.$emit("close");

@@ -60,4 +60,11 @@ public class SetmealController {
 		}
 		return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
 	}
+
+	@RequestMapping("/edit")
+	public Result edit(@RequestBody Setmeal tempformData, Integer[] checkgroupIds){
+		System.out.println(tempformData.toString());
+		System.out.println(checkgroupIds.toString());
+		return new Result(false, MessageConstant.ADD_SETMEAL_FAIL);
+	}
 }
