@@ -6,6 +6,7 @@ import OrderSetting from '../components/ordersetting.vue'
 import newCheckItem from '../views/checkitem/index.vue'
 import newCheckGroup from '../views/checkgroup/index.vue'
 import newSetmeal from '../views/setmeal/index.vue'
+import login from '../views/login/login.vue'
 
 
 
@@ -15,7 +16,7 @@ const routes = [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: Home,
     }, {
         path: '/CheckItem',
         name: 'CheckItem',
@@ -32,6 +33,13 @@ const routes = [
         path: '/OrderSetting',
         name: 'OrderSetting',
         component: OrderSetting
+    }, {
+        path: '/Login',
+        name: 'login',
+        component: login,
+        meta: {
+            keepalive: true
+        }
     }
     // , {
     //     path: '/newCheckItem',
