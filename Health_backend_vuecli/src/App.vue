@@ -6,7 +6,7 @@
         <a href="/Setmeal">CheckGroup</a>
         <router-view /> -->
 
-        <el-container>
+        <el-container v-if="!$route.meta.keepalive">
             <el-header class="main-header" style="height:70px;">
                 <nav class="navbar navbar-static-top">
                     <!-- Logo -->
@@ -53,6 +53,8 @@
                 </el-container>
             </el-container>
         </el-container>
+
+        <router-view v-if="$route.meta.keepalive"></router-view>
     </div>
 </template>
 
