@@ -55,7 +55,10 @@ public class OrderSettingController {
 			if(list != null && list.size() > 0){
 				for (OrderSetting orderSetting : list) {
 					Map<String,Object> m = new HashMap<>();
-					m.put("date",orderSetting.getOrderDate().getDate());//获取日期数字（几号）
+					Calendar instance = Calendar.getInstance();
+					instance.setTime(orderSetting.getOrderDate());
+					int day = instance.get(Calendar.DAY_OF_MONTH);
+					m.put("date",day);//获取日期数字（几号）
 					m.put("number",orderSetting.getNumber());
 					m.put("reservations",orderSetting.getReservations());
 					result.add(m);
