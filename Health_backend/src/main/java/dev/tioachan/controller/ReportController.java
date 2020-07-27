@@ -22,28 +22,33 @@ public class ReportController {
 	private ReportService reportService;
 
 	@RequestMapping("/getMemberReport")
-	public Result getMemberReport(String date){
-		System.out.println(date);
+	public Result getMemberReport(String startDate,String endDate){
 		try {
-			Date parseDate = DateUtils.parseDate(date, "yyyy-MM");
+			Date startMonth = DateUtils.parseDate(startDate, "yyyy-MM");
+			Date endMonth = DateUtils.parseDate(endDate, "yyyy-MM");
+
+//			Calendar.getInstance().
 			//前端用月份数组
 			List<String> monthsStr=new ArrayList<>();
 			//查询用月份
 			List<Date> months=new ArrayList<>();
 			//按月份存放数量统计数字
 			List<Integer> memberCount=new ArrayList<>();
-			//准备月份数据
-			for (int i = 0; i < 12; i++) {
-				months.add(parseDate);
-				monthsStr.add(new SimpleDateFormat("yyyy.MM").format(parseDate));
-				parseDate=DateUtils.addMonths(parseDate,-1);
+
+//			//准备月份数据
+			while (!DateUtils.isSameDay(startMonth,endMonth)){
+				months.add(startMonth);
+				monthsStr.add(new SimpleDateFormat("yyyy.MM").format(startMonth));
+				startMonth=DateUtils.addMonths(startMonth,1);
 			}
-			//反转数据
-			Collections.reverse(months);  //查询用
-			Collections.reverse(monthsStr);//返回给前端
+			months.add(endMonth);
+			monthsStr.add(new SimpleDateFormat("yyyy.MM").format(endMonth));
+
+			System.out.println(monthsStr);
+			System.out.println(months);
+
 			//查询
 			memberCount=reportService.counterMemberByMonth(months);
-
 			Map<String,Object> map=new HashMap<>();
 			map.put("months",monthsStr);
 			map.put("memberCount",memberCount);

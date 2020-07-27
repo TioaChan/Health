@@ -10,66 +10,56 @@
         </div>
         <div class="app-container">
             <div class="box">
-                <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-                <div id="chart1" style="height:600px;"></div>
+                <div class="block right">
+                    <el-date-picker v-model="value1" type="monthrange" range-separator="至" start-placeholder="开始月份" end-placeholder="结束月份" @change="monthChanged()">
+                    </el-date-picker>
+                </div>
+                <ecahrtLine :currentTitle="currentTitle" :currentXAxis="currentXAxis" :currentSeriesData="currentSeriesData"></ecahrtLine>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import ecahrtLine from './components/ecahrtLine.vue'
     export default {
+        components: {
+            ecahrtLine
+        },
         data() {
             return {
-                date: {
-                    year: null,
-                    month: null,
-                    date: null,
-                },
-                months: [],
-                memberCount: [],
+                currentTitle: null,
+                currentXAxis: [],
+                currentSeriesData: [],
+                value1: '',
             }
-        },
-        methods: {
-
         },
         created() {
             let nowDate = new Date();
-            this.date.year = nowDate.getFullYear();
-            this.date.month = nowDate.getMonth() + 1;
-            this.date.date = nowDate.getDate();
-            // console.log(this.date);
-            this.$http.get("http://127.0.0.1:82/report/getMemberReport.do?date=" + this.date.year + "-" + this.date.month).then((res) => {
-                if (res.data.flag) {
-                    this.months = res.data.data.months;
-                    this.memberCount = res.data.data.memberCount;
-                    console.log(this.months);
-                    console.log(this.memberCount);
-                    var myChart1 = this.$echarts.init(document.getElementById('chart1'));
+            let startDate = new Date();
+            startDate.setFullYear(startDate.getFullYear() - 1);
+            this.value1 = [startDate, nowDate];
 
-                    myChart1.setOption(
-                    {
-                        title: {
-                            text: '会员数量'
-                        },
-                        tooltip: {},
-                        legend: {
-                            data: ['会员数量']
-                        },
-                        xAxis: {
-                            data: this.months
-                        },
-                        yAxis: {
-                            type: 'value'
-                        },
-                        series: [{
-                            name: '会员数量',
-                            type: 'line',
-                            data: this.memberCount
-                        }]
-                    });
-                }
-            });
+            let param1 = this.value1[0].getFullYear() + "-" + (this.value1[0].getMonth() + 1);
+            let param2 = this.value1[1].getFullYear() + "-" + (this.value1[1].getMonth() + 1);
+            console.log("?")
+            this.getMemberReport(param1, param2);
+        },
+        methods: {
+            getMemberReport(param1, param2) {
+                this.$http.get("http://127.0.0.1:82/report/getMemberReport.do?startDate=" + param1 + "&endDate=" + param2).then((res) => {
+                    if (res.data.flag) {
+                        this.currentXAxis = res.data.data.months;
+                        this.currentSeriesData = res.data.data.memberCount;
+                    }
+                });
+            },
+            monthChanged() {
+                let param1 = this.value1[0].getFullYear() + "-" + (this.value1[0].getMonth()+1);
+                let param2 = this.value1[1].getFullYear() + "-" + (this.value1[1].getMonth()+1);
+
+                this.getMemberReport(param1, param2);
+            }
         }
     }
 </script>
