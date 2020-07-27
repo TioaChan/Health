@@ -120,6 +120,6 @@
     }
 </script>
 
-<style scoped>
-    @import "../../assets/css/login.css";
+<style scoped src="../../assets/css/login.css">
+    /* @import "../../assets/css/login.css"; */
 </style>
