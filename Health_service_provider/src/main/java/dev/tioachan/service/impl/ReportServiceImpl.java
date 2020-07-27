@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service(interfaceClass = ReportService.class)
 @Transactional
@@ -22,7 +23,7 @@ public class ReportServiceImpl implements ReportService {
 	private ReportDao reportDao;
 
 	@Override
-	public List<Integer> counterMemberByMonth(List<Date> months) throws Exception {
+	public List<Integer> countMemberByMonth(List<Date> months) throws Exception {
 
 		List<Integer> counterList=new ArrayList<>();
 		try {
@@ -35,5 +36,10 @@ public class ReportServiceImpl implements ReportService {
 			throw e;
 		}
 		return counterList;
+	}
+
+	@Override
+	public List<Map<String, Object>> countSetmeal() {
+		return reportDao.countSetmeal();
 	}
 }

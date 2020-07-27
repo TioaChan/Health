@@ -7,4 +7,10 @@
 	<select id="counterMemberByMonth" parameterType="date" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM t_member where regTime between #{startDay} and #{endDay}
 	</select>
+	<select id="countSetmeal" resultType="java.util.Map">
+	select s.name,count(o.id) as value
+		from t_order o ,t_setmeal s
+		where o.setmeal_id = s.id
+		group by s.name
+	</select>
 </mapper>
