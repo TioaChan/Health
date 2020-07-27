@@ -9,10 +9,12 @@
             </el-breadcrumb>
         </div>
         <div class="app-container">
-            <div class="box">
-                <div class="block right">
+
+            <div class="box" id="printMe">
+                <div class="block">
                     <el-date-picker v-model="value1" type="monthrange" range-separator="至" start-placeholder="开始月份" end-placeholder="结束月份" @change="monthChanged()">
                     </el-date-picker>
+                    <el-button v-print="printObj">导出为PDF</el-button>
                 </div>
                 <ecahrtLine :currentTitle="currentTitle" :currentXAxis="currentXAxis" :currentSeriesData="currentSeriesData"></ecahrtLine>
             </div>
@@ -32,6 +34,12 @@
                 currentXAxis: [],
                 currentSeriesData: [],
                 value1: '',
+                printObj: {
+                    id: "printMe",
+                    popTitle: 'good print',
+                    extraCss: 'https://www.google.com,https://www.google.com',
+                    extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>'
+                }
             }
         },
         created() {
@@ -55,8 +63,8 @@
                 });
             },
             monthChanged() {
-                let param1 = this.value1[0].getFullYear() + "-" + (this.value1[0].getMonth()+1);
-                let param2 = this.value1[1].getFullYear() + "-" + (this.value1[1].getMonth()+1);
+                let param1 = this.value1[0].getFullYear() + "-" + (this.value1[0].getMonth() + 1);
+                let param2 = this.value1[1].getFullYear() + "-" + (this.value1[1].getMonth() + 1);
 
                 this.getMemberReport(param1, param2);
             }
