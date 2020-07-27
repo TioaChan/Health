@@ -12,6 +12,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.5",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "echarts": "^4.8.0",
     "element-ui": "^2.4.5",
     "font-awesome": "^4.7.0",
     "vue": "^2.6.11",

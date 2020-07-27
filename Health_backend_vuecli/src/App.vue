@@ -136,12 +136,26 @@
                     "path": "5", //菜单项所对应的路由路径
                     "title": "统计分析", //菜单项名称
                     "icon": "fa-heartbeat",
-                    "children": [{ //是否有子菜单，若没有，则为[]
-                        "path": "/5-1",
-                        "title": "工作量统计",
-                        "linkUrl": "all-medical-list.html",
-                        "children": []
-                    }]
+                    "children": [ //是否有子菜单，若没有，则为[]
+                        {
+                            "path": "/5-1",
+                            "title": "会员数量统计",
+                            "linkUrl": "report_member",
+                            "children": []
+                        },
+                        {
+                            "path": "/5-2",
+                            "title": "预约套餐占比统计",
+                            "linkUrl": "report_setmeal",
+                            "children": []
+                        },
+                        {
+                            "path": "/5-3",
+                            "title": "运营数据统计",
+                            "linkUrl": "report_business",
+                            "children": []
+                        }
+                    ]
                 }],
                 "itcastLogoUrl": require("../src/assets/img/logo.png"),
                 "userAvatarUrl": require("../src/assets/img/user2-160x160.jpg"),
