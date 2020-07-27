@@ -9,8 +9,13 @@
             </el-breadcrumb>
         </div>
         <div class="app-container">
-            <div class="box">
-                <echartPie :currentData="currentData" :currentLegendData="currentLegendData" :currentSeriesData="currentSeriesData"></echartPie>
+            <div class="box" id="printMe">
+                <div class="block">
+                    <!-- <el-date-picker v-model="value1" type="monthrange" range-separator="至" start-placeholder="开始月份" end-placeholder="结束月份" @change="monthChanged()">
+						</el-date-picker> -->
+                    <el-button v-print="printObj">导出为PDF</el-button>
+                </div>
+                <echartPie :currentData="currentData"></echartPie>
             </div>
         </div>
     </div>
@@ -24,9 +29,13 @@
         },
         data() {
             return {
-                currentLegendData: [],
-                currentSeriesData: [],
                 currentData: {},
+                printObj: {
+                    id: "printMe",
+                    popTitle: 'good print',
+                    extraCss: 'https://www.google.com,https://www.google.com',
+                    extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>'
+                }
             }
         },
         created() {
@@ -37,8 +46,6 @@
                 this.$http.get("http://127.0.0.1:82/report/getSetmealReport.do").then((resp) => {
                     if (resp.data.flag) {
                         this.currentData = resp.data.data;
-                        this.currentLegendData = resp.data.data.setmealNames;
-                        this.currentSeriesData = resp.data.data.setmealCount;
                     }
                 });
             },
