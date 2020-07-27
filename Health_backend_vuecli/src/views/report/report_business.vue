@@ -60,7 +60,7 @@
                         <td>占比</td>
                         <td>备注</td>
                     </tr>
-                    <tr v-for="s in reportData.hotSetmeal">
+                    <tr v-for="s in reportData.hotSetmeal" :key='s.id'>
                         <td>{{s.name}}</td>
                         <td>{{s.setmeal_count}}</td>
                         <td>{{s.proportion}}</td>
