@@ -16,23 +16,21 @@
                     </el-date-picker>
                     <el-button v-print="printObj">导出为PDF</el-button>
                 </div>
-                <ecahrtLine :currentTitle="currentTitle" :currentXAxis="currentXAxis" :currentSeriesData="currentSeriesData"></ecahrtLine>
+                <ecahrtLine :currentMemberData="currentMemberData"></ecahrtLine>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import ecahrtLine from './components/ecahrtLine.vue'
+    import ecahrtLine from './components/echartLine.vue'
     export default {
         components: {
             ecahrtLine
         },
         data() {
             return {
-                currentTitle: null,
-                currentXAxis: [],
-                currentSeriesData: [],
+                currentMemberData: {},
                 value1: '',
                 printObj: {
                     id: "printMe",
@@ -57,15 +55,13 @@
             getMemberReport(param1, param2) {
                 this.$http.get("http://127.0.0.1:82/report/getMemberReport.do?startDate=" + param1 + "&endDate=" + param2).then((res) => {
                     if (res.data.flag) {
-                        this.currentXAxis = res.data.data.months;
-                        this.currentSeriesData = res.data.data.memberCount;
+                        this.currentMemberData = res.data.data;
                     }
                 });
             },
             monthChanged() {
                 let param1 = this.value1[0].getFullYear() + "-" + (this.value1[0].getMonth() + 1);
                 let param2 = this.value1[1].getFullYear() + "-" + (this.value1[1].getMonth() + 1);
-
                 this.getMemberReport(param1, param2);
             }
         }
