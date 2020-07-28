@@ -113,4 +113,13 @@ public class ReportController {
 			return new Result(false,MessageConstant.GET_SETMEAL_COUNT_REPORT_FAIL);
 		}
 	}
+
+	@RequestMapping("/getBusinessReportData")
+	public Result getBusinessReportData(){
+		try{
+			return new Result(true,MessageConstant.GET_BUSINESS_REPORT_SUCCESS,reportService.getBusinessReportData());
+		}catch (Exception e){
+			return new Result(false,MessageConstant.GET_BUSINESS_REPORT_FAIL);
+		}
+	}
 }

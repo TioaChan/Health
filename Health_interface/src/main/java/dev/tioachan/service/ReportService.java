@@ -9,4 +9,6 @@ public interface ReportService {
 
 	List<Map<String, Object>> countSetmeal();
 
+	Map<String,Object> getBusinessReportData () throws Exception ;
+
 }

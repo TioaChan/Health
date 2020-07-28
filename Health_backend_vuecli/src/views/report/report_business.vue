@@ -92,7 +92,7 @@
                         { name: '阳光爸妈升级肿瘤12项筛查（男女单人）体检套餐', setmeal_count: 200, proportion: 0.222 },
                         { name: '阳光爸妈升级肿瘤12项筛查体检套餐', setmeal_count: 200, proportion: 0.222 }
                     ]
-                }
+                }  
             }
         },
         created() {
