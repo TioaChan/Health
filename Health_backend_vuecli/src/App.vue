@@ -34,19 +34,56 @@
             </el-header>
             <el-container>
                 <el-aside width="200px">
-                    <el-menu>
-                        <el-submenu v-for="menu in menuList" :index="menu.path">
+                    <!-- //====================================================================== -->
+                    <el-menu :default-active="this.$route.path" router>
+
+                        <el-submenu v-for="menu in menuList" :index="menu.path" :key="menu.id">
+
                             <template slot="title">
                                 <i class="fa" :class="menu.icon"></i>
                                 {{menu.title}}
                             </template>
+
                             <template v-for="child in menu.children">
-                                <el-menu-item :index="child.path">
-                                    <a :href="child.linkUrl">{{child.title}}</a>
+                                <el-menu-item :index="child.linkUrl" :key="child.id">
+                                    <!-- <a :href="child.linkUrl">{{child.title}}</a> -->
+                                    {{child.title}}
                                 </el-menu-item>
+
                             </template>
+
                         </el-submenu>
+
                     </el-menu>
+                    <!-- //====================================================================== -->
+                    <!-- <el-menu default-active="1-2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+                        <el-submenu index="1">
+                            <template slot="title">
+                                <i class="el-icon-location"></i>
+                                <span>导航一</span>
+                            </template>
+                            <el-menu-item-group>
+                                <el-menu-item index="/report/report_member">选项1</el-menu-item>
+                                <el-menu-item index="/report/report_setmeal">选项2</el-menu-item>
+                                <el-menu-item index="/report/report_business">选项2</el-menu-item>
+                            </el-menu-item-group>
+                        </el-submenu>
+                    </el-menu> -->
+                    <!-- //====================================================================== -->
+                    <!-- <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :router="true">
+                        <el-submenu index="/report">
+                            <template slot="title">
+                                <i class="el-icon-location"></i>
+                                <span>导航一</span>
+                            </template>
+                            <el-menu-item-group>
+                                <el-menu-item index="/report/report_member">选项1</el-menu-item>
+                                <el-menu-item index="/report/report_setmeal">选项2</el-menu-item>
+                                <el-menu-item index="/report/report_business">选项3</el-menu-item>
+                            </el-menu-item-group>
+                        </el-submenu>
+                    </el-menu> -->
+                    <!-- //====================================================================== -->
                 </el-aside>
                 <el-container class="el-main">
                     <router-view />
@@ -65,6 +102,14 @@
         name: 'app',
         components: {
             // HelloWorld
+        },
+        methods: {
+            handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                console.log(key, keyPath);
+            }
         },
         data() {
             return {
@@ -104,22 +149,22 @@
                     }, {
                         "path": "/3-2",
                         "title": "预约设置",
-                        "linkUrl": "OrderSetting",
+                        "linkUrl": "/order/orderSetting",
                         "children": []
                     }, {
                         "path": "/3-3",
                         "title": "套餐管理",
-                        "linkUrl": "Setmeal",
+                        "linkUrl": "/order/setmeal",
                         "children": []
                     }, {
                         "path": "/3-4",
                         "title": "检查组管理",
-                        "linkUrl": "CheckGroup",
+                        "linkUrl": "/order/checkGroup",
                         "children": []
                     }, {
                         "path": "/3-5",
                         "title": "检查项管理",
-                        "linkUrl": "CheckItem",
+                        "linkUrl": "/order/checkItem",
                         "children": []
                     }]
                 }, {
@@ -136,12 +181,26 @@
                     "path": "5", //菜单项所对应的路由路径
                     "title": "统计分析", //菜单项名称
                     "icon": "fa-heartbeat",
-                    "children": [{ //是否有子菜单，若没有，则为[]
-                        "path": "/5-1",
-                        "title": "工作量统计",
-                        "linkUrl": "all-medical-list.html",
-                        "children": []
-                    }]
+                    "children": [ //是否有子菜单，若没有，则为[]
+                        {
+                            "path": "/5-1",
+                            "title": "会员数量统计",
+                            "linkUrl": "/report/report_member",
+                            "children": []
+                        },
+                        {
+                            "path": "/5-2",
+                            "title": "预约套餐占比统计",
+                            "linkUrl": "/report/report_setmeal",
+                            "children": []
+                        },
+                        {
+                            "path": "/5-3",
+                            "title": "运营数据统计",
+                            "linkUrl": "/report/report_business",
+                            "children": []
+                        }
+                    ]
                 }],
                 "itcastLogoUrl": require("../src/assets/img/logo.png"),
                 "userAvatarUrl": require("../src/assets/img/user2-160x160.jpg"),
