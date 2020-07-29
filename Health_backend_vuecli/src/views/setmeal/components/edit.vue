@@ -81,7 +81,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="c in tableData">
+                            <tr v-for="c in tableData" :key="c.id">
                                 <td>
                                     <input :id="c.id" v-model="checkgroupIds" type="checkbox" :value="c.id">
                                 </td>

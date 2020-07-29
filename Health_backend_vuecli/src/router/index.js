@@ -9,7 +9,6 @@ import newCheckGroup from '../views/checkgroup/index.vue'
 import newSetmeal from '../views/setmeal/index.vue'
 
 import login from '../views/login/login.vue'
-
 import report_member from '../views/report/report_member.vue'
 import report_setmeal from '../views/report/report_setmeal.vue'
 import report_business from '../views/report/report_business.vue'
