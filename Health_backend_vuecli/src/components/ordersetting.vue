@@ -50,7 +50,7 @@
                             <!-- 日期 -->
                             <ul class="days">
                                 <!-- v-for循环 每一次循环用<li>标签创建一天 -->
-                                <li v-for="dayobject in days">
+                                <li v-for="dayobject in days" :key="dayobject.id">
                                     <template>
                                         <!-- 非当前月份 -->
                                         <div class="other-month" v-if="dayobject.day.getMonth()+1 != currentMonth">
@@ -64,13 +64,13 @@
                                                 <template v-for="obj in leftobj">
                                                     <template v-if="obj.date == dayobject.day.getDate()">
                                                         <template v-if="obj.number > obj.reservations">
-                                                            <div class="usual">
+                                                            <div class="usual" :key="obj.id">
                                                                 <p>可预约{{obj.number}}人</p>
                                                                 <p>已预约{{obj.reservations}}人</p>
                                                             </div>
                                                         </template>
                                                         <template v-else>
-                                                            <div class="fulled">
+                                                            <div class="fulled" :key="obj.id">
                                                                 <p>可预约{{obj.number}}人</p>
                                                                 <p>已预约{{obj.reservations}}人</p>
                                                                 <p>已满</p>
@@ -80,7 +80,6 @@
                                                 </template>
                                                 <button v-if="dayobject.day > today" @click="handleOrderSet(dayobject.day)" class="orderbtn">设置</button>
                                             </template>
-
                                         </div>
                                     </template>
                                 </li>
